@@ -3,8 +3,27 @@ header('Access-Control-Allow-Origin: *');
 include("connection.php");
 require __DIR__ . '/vendor/autoload.php';
 
+if (!isset($_POST['email']) && !isset($_POST['password'])) {
+  $response['status'] = 'Failed';
+  $reponse['message'] = 'Credentials missing';
+  echo json_encode($response);
+  exit();
+}
+
+//checking if already registered
 $email = $_POST['email'];
-// $password = $_POST['password'];
+$emailQuery = $mysqli->prepare('SELECT email FROM users WHERE email = ?');
+$emailQuery->bind_param('s', $email);
+$emailQuery->execute();
+$emailQuery->store_result();
+
+if ($emailQuery->num_rows > 0) {
+ $response['status'] = 'email already registered';
+ echo json_encode($response);
+ exit();
+}
+
+
 $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
 $firstname = $_POST['firstname'];

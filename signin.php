@@ -5,6 +5,14 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 
+if (!isset($_POST['email']) && !isset($_POST['password'])) {
+    $response['status'] = 'Failed';
+    $reponse['message'] = 'Credentials missing';
+    echo json_encode($response);
+    exit();
+  }
+  
+
 $email = $_POST['email'];
 $password = $_POST['password'];
 
