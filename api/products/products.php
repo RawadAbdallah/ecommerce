@@ -1,7 +1,7 @@
 <?php
 header('Access-Controll-Allow-Origin:*');
-include("connection.php");
-require __DIR__ . '/vendor/autoload.php';
+include("../../connection.php");
+require '../../vendor/autoload.php';
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\ExpiredException;
